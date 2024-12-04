@@ -1,4 +1,4 @@
-public class Person{
+public abstract class Person{
     //add three instance variables
     private String name;
     private String id;
