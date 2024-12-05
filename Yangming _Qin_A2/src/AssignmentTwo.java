@@ -20,6 +20,10 @@ public class AssignmentTwo {
         System.out.println("Part Six----------------------");
         assignmentTwo.partSix();
 
+        System.out.println();
+        System.out.println("Part Seven---------------------");
+        assignmentTwo.partSeven();
+
     }
     public void partThree(){
         Ride ride = new Ride("Roller Coaster", 10.0, 4,
@@ -128,5 +132,17 @@ public class AssignmentTwo {
         ride.exportRideHistory("ride_history.csv");
     }
     public void partSeven(){
+        Ride ride = new Ride();
+
+        // Import files created before
+        String filename = "ride_history.csv";
+        ride.importRideHistory(filename);
+
+        // Print the number of visitors in the linked list
+        System.out.println("Number of visitors imported: " + ride.numberOfVisitor());
+
+        // Print all visitors in the linked list
+        ride.printRideHistory();
+
     }
 }

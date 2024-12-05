@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Ride implements RideInterface  {
@@ -144,6 +142,28 @@ public class Ride implements RideInterface  {
             System.out.println("Ride history exported to " + filename);
         } catch (IOException e) {
             System.out.println("Error exporting ride history: " + e.getMessage());
+        }
+    }
+
+    //import method
+    public void importRideHistory(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 5) { // Ensure that the data length is correct.
+                    Boolean membershipStatus = Boolean.parseBoolean(data[3]);
+                    Visitor visitor = new Visitor(data[0], data[1], Integer.parseInt(data[2]), membershipStatus, data[4]);
+                    rideHistory.add(visitor);
+                } else {
+                    System.out.println("Invalid data format in file: " + line);
+                }
+            }
+            System.out.println("Ride history imported from " + filename);
+        } catch (IOException e) {
+            System.out.println("Error importing ride history: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing age in file: " + e.getMessage());
         }
     }
 }
