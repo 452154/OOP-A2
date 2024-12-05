@@ -16,6 +16,10 @@ public class AssignmentTwo {
         System.out.println("Part Five--------------------");
         assignmentTwo.partFive();
 
+        System.out.println();
+        System.out.println("Part Six----------------------");
+        assignmentTwo.partSix();
+
     }
     public void partThree(){
         Ride ride = new Ride("Roller Coaster", 10.0, 4,
@@ -111,6 +115,17 @@ public class AssignmentTwo {
     }
 
     public void partSix(){
+        Ride ride = new Ride();
+
+        //Add visitors to the collection
+        ride.addVisitorToHistory(new Visitor("Devin","3",8,true,"Roller Coaster"));
+        ride.addVisitorToHistory(new Visitor("Yang","4",21,true,"Roller Coaster"));
+        ride.addVisitorToHistory(new Visitor("Ming","5",18,true,"Roller Coaster"));
+        ride.addVisitorToHistory(new Visitor("Alice","1",15,true,"Roller Coaster"));
+        ride.addVisitorToHistory(new Visitor("Bob","2",10,true,"Roller Coaster"));
+
+        //export file
+        ride.exportRideHistory("ride_history.csv");
     }
     public void partSeven(){
     }
