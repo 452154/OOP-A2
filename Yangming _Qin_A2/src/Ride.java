@@ -28,10 +28,13 @@ public class Ride implements RideInterface  {
 
     @Override
     public void addVisitorToQueue(Visitor visitor) {
-        waitingQueue.add(visitor);
-        visitor.printDetails();
-        System.out.println("Added to the queue.");
-
+        if (visitor != null){
+            waitingQueue.add(visitor);
+            visitor.printDetails();
+            System.out.println("Added to the queue.");
+        } else {
+            System.out.println("Add failed.");
+        }
     }
 
     @Override
@@ -44,34 +47,38 @@ public class Ride implements RideInterface  {
         } else {
             System.out.println("The queue is empty and cannot be removed.");
         }
-
     }
 
     @Override
     public void printQueue() {
-        System.out.println("Visitors in the current queue:");
-        for (Visitor visitor : waitingQueue) {
-            visitor.printDetails();
-            System.out.println();
+        if (waitingQueue.isEmpty()) {
+            System.out.println("There are no visitors in the queue.");
+        } else {
+            System.out.println("Visitors in the current queue:");
+            for (Visitor visitor : waitingQueue) {
+                visitor.printDetails();
+                System.out.println();
+            }
         }
-
     }
 
+    // Define the specific behavior of operating amusement facilities for one cycle.
     @Override
     public void runOneCycle() {
         if (rideOperator == null) {
             System.out.println("The amusement equipment cannot operate because there is no assigned operator.");
             return;
         }
-
         if (waitingQueue.isEmpty()) {
             System.out.println("The amusement facilities will not operate as there are no waiting tourists in the queue.");
             return;
         }
-
+        if (maxRider < 1) {
+            System.out.println("At least 1 visitor is required to run the ride.");
+            return;
+        }
         //Declare an array list for storing visitors who have taken rides on amusement facilities.
         List<Visitor> ridersThisCycle = new ArrayList<>();
-
         while (!waitingQueue.isEmpty() && ridersThisCycle.size() < maxRider) {
             Visitor visitor = waitingQueue.poll();
             ridersThisCycle.add(visitor);
@@ -90,45 +97,65 @@ public class Ride implements RideInterface  {
         // Increase the frequency of operation of amusement facilities
         numOfCycles++;
         System.out.println("The amusement facility has run " + numOfCycles + " times.");
-
-
     }
 
     @Override
     public void addVisitorToHistory(Visitor visitor) {
-        rideHistory.add(visitor);
-        visitor.printDetails();
-        System.out.println(" Added to the visitor history.");
+        if ( visitor != null) {
+            rideHistory.add(visitor);
+            visitor.printDetails();
+            System.out.println(" Added to the visitor history.");
+        } else {
+            System.out.println("Add failed.");
+        }
     }
 
     @Override
     public boolean checkVisitorFromHistory(Visitor visitor) {
-        visitor.printDetails();
-        System.out.println("In the history of visitor .");
+        if (rideHistory.contains(visitor)){
+            visitor.printDetails();
+            System.out.println("In the history of visitor.");
+        }
+        else {
+            System.out.println("Visitor not found in history. ");
+        }
         return rideHistory.contains(visitor);
     }
 
     @Override
     public int numberOfVisitor() {
-        // Return the quantity in the historical record.
+        if (rideHistory.size() > 0) {
+            System.out.println("Number of visitors:" + rideHistory.size());
+        } else {
+            System.out.println("There are no visitor records.");
+        }
         return rideHistory.size();
     }
 
     @Override
     public void printRideHistory() {
-        System.out.println("Historical visitors:");
         // Print detailed information of all tourists who have taken the amusement facility using an iterator
-        Iterator<Visitor> rideIterator = rideHistory.iterator();
-        while (rideIterator.hasNext()) {
-            Visitor visitor = rideIterator.next();
-            visitor.printDetails();
-            System.out.println();
+        if (rideHistory.isEmpty()){
+            System.out.println("There are no visitors in the ride history.");
+        }else {
+            System.out.println("Historical visitors:");
+            Iterator<Visitor> rideIterator = rideHistory.iterator();
+            while (rideIterator.hasNext()) {
+                Visitor visitor = rideIterator.next();
+                visitor.printDetails();
+                System.out.println();
+            }
         }
     }
 
     // Create a method to sort the Visitor collection.
     public void sortVisitors(Comparator<Visitor> comparator) {
-        Collections.sort(rideHistory, comparator);
+        try {
+            Collections.sort(rideHistory, comparator);
+            System.out.println("Visitors sorting successful.");
+        } catch (NullPointerException e) {
+            System.out.println("Failed to sort visitors: rideHistory is null.");
+        }
     }
 
     //export method

@@ -46,22 +46,28 @@ public class AssignmentTwo {
         Ride ride = new Ride("Roller Coaster", 10.0, 4,
                 new Employee("Mary","1001",30,"operator","10"));
 
-        //Add visitors to the collection
-        ride.addVisitorToHistory(new Visitor("Devin","3",8,true,"Roller Coaster"));
-        ride.addVisitorToHistory(new Visitor("Yang","4",21,true,"Roller Coaster"));
-        ride.addVisitorToHistory(new Visitor("Ming","5",18,true,"Roller Coaster"));
-        ride.addVisitorToHistory(new Visitor("Alice","1",15,true,"Roller Coaster"));
-        ride.addVisitorToHistory(new Visitor("Bob","2",10,true,"Roller Coaster"));
+        Visitor devin = new Visitor("Devin","3",8,true,"Roller Coaster");
+        Visitor yang = new Visitor("Yang","4",21,true,"Roller Coaster");
+        Visitor ming = new Visitor("Ming","5",18,true,"Roller Coaster");
+        Visitor alice = new Visitor("Alice","1",15,true,"Roller Coaster");
+        Visitor bob = new Visitor("Bob","2",10,true,"Roller Coaster");
 
-        //Check if the visitor is in the collection
-        ride.checkVisitorFromHistory(new Visitor("Devin","3",8,true,"Roller Coaster"));
-        ride.checkVisitorFromHistory(new Visitor("Yang","4",21,true,"Roller Coaster"));
-        ride.checkVisitorFromHistory(new Visitor("Ming","5",18,true,"Roller Coaster"));
-        ride.checkVisitorFromHistory(new Visitor("Alice","1",15,true,"Roller Coaster"));
-        ride.checkVisitorFromHistory(new Visitor("Bob","2",10,true,"Roller Coaster"));
+        //Add visitors to the collection
+        ride.addVisitorToHistory(devin);
+        ride.addVisitorToHistory(yang);
+        ride.addVisitorToHistory(ming);
+        ride.addVisitorToHistory(alice);
+        ride.addVisitorToHistory(bob);
+
+        System.out.println("check whether the visitor is in the ride history.");
+        ride.checkVisitorFromHistory(devin);
+        ride.checkVisitorFromHistory(yang);
+        ride.checkVisitorFromHistory(ming);
+        ride.checkVisitorFromHistory(alice);
+        ride.checkVisitorFromHistory(bob);
 
         //Print the number of visitors
-        System.out.println("Number of visitors:" + ride.numberOfVisitor());
+        ride.numberOfVisitor();
 
         //Print detailed information of visitors in the collection
         ride.printRideHistory();
@@ -139,7 +145,7 @@ public class AssignmentTwo {
         ride.importRideHistory(filename);
 
         // Print the number of visitors in the linked list
-        System.out.println("Number of visitors imported: " + ride.numberOfVisitor());
+        ride.numberOfVisitor();
 
         // Print all visitors in the linked list
         ride.printRideHistory();
