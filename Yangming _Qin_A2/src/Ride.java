@@ -161,12 +161,14 @@ public class Ride implements RideInterface  {
     //export method
     public void exportRideHistory(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            //Add column name.
+            writer.write("Name,Id,Age,MembershipStatus,FavoriteRide\n");
             for (Visitor visitor : rideHistory) {
                 writer.write(visitor.getName() + "," + visitor.getId() + "," +
                         visitor.getAge() + "," + visitor.getMembershipStatus() + "," +
                         visitor.getFavoriteRide() + "\n");
             }
-            System.out.println("Ride history exported to " + filename);
+            System.out.println("Ride history exported to " + filename );
         } catch (IOException e) {
             System.out.println("Error exporting ride history: " + e.getMessage());
         }
@@ -176,14 +178,18 @@ public class Ride implements RideInterface  {
     public void importRideHistory(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-                if (data.length == 5) { // Ensure that the data length is correct.
-                    Boolean membershipStatus = Boolean.parseBoolean(data[3]);
-                    Visitor visitor = new Visitor(data[0], data[1], Integer.parseInt(data[2]), membershipStatus, data[4]);
-                    rideHistory.add(visitor);
-                } else {
-                    System.out.println("Invalid data format in file: " + line);
+            //The first line does not read data.
+            if ((line = reader.readLine()) != null) {
+                //Read data from the second line onwards.
+                while ((line = reader.readLine()) != null) {
+                    String[] data = line.split(",");
+                    if (data.length == 5) { // Ensure that the data length is correct.
+                        Visitor visitor = new Visitor(data[0], data[1], Integer.parseInt(data[2]),
+                                                      Boolean.parseBoolean(data[3]), data[4]);
+                        rideHistory.add(visitor);
+                    } else {
+                        System.out.println("Invalid data format in file: " + line);
+                    }
                 }
             }
             System.out.println("Ride history imported from " + filename);
